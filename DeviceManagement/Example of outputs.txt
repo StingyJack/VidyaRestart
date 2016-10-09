@@ -1,0 +1,122 @@
+Get-Device | where {$_.name -like "NVIDIA GeForce GTX 460M*"} 
+
+Name                : NVIDIA GeForce GTX 460M
+Capabilities        : 0
+ConfigurationFlags  : 0
+InstallState        : InstallStateInstalled
+NumaNode            : 0
+UINumber            : 19
+Characteristics     : 0
+Manufacturer        : 
+HardwareIds         : {PCI\VEN_10DE&DEV_0DD1&SUBSYS_20421043&REV_A1, PCI\VEN_10DE&DEV_0DD1&SUBSYS_20421043, 
+                      PCI\VEN_10DE&DEV_0DD1&CC_030000, PCI\VEN_10DE&DEV_0DD1&CC_0300...}
+LocationPaths       : {PCIROOT(0)#PCI(0300)#PCI(0000), ACPI(_SB_)#ACPI(PCI0)#ACPI(PEG3)#ACPI(GFX0), , }
+DriverVersion       : 21.21.13.7306
+DriverProvider      : NVIDIA
+DriverDescription   : NVIDIA GeForce GTX 460M
+LocationInfo        : PCI bus 1, device 0, function 0
+InstanceId          : PCI\VEN_10DE&DEV_0DD1&SUBSYS_20421043&REV_A1\4&1DD391AA&0&0018
+Service             : nvlddmkm
+DeviceParent        : PCI\VEN_8086&DEV_D138&SUBSYS_1C771043&REV_11\3&11583659&0&18
+DeviceSiblings      : {PCI\VEN_10DE&DEV_0BE9&SUBSYS_20421043&REV_A1\4&1dd391aa&0&0118, , }
+IsPresent           : True
+HasProblem          : False
+AvailableProperties : {[DEVPKEY_NAME, NVIDIA GeForce GTX 460M], [DEVPKEY_Device_DeviceDesc, NVIDIA GeForce GTX 
+                      460M], [DEVPKEY_Device_HardwareIds, System.String[]], [DEVPKEY_Device_CompatibleIds, 
+                      System.String[]]...}
+
+-------------------------
+
+gwmi -list |?{$_ -match "video"}
+
+
+   NameSpace: ROOT\cimv2
+
+Name                                Methods              Properties                                                    
+----                                -------              ----------                                                    
+CIM_VideoControllerResolution       {}                   {Caption, Description, HorizontalResolution, MaxRefreshRate...
+Win32_VideoConfiguration            {}                   {ActualColorResolution, AdapterChipType, AdapterCompatibili...
+CIM_VideoSetting                    {}                   {Element, Setting}                                            
+Win32_VideoSettings                 {}                   {Element, Setting}                                            
+CIM_VideoBIOSFeature                {}                   {Caption, CharacteristicDescriptions, Characteristics, Desc...
+CIM_VideoController                 {SetPowerState, R... {AcceleratorCapabilities, Availability, CapabilityDescripti...
+CIM_PCVideoController               {SetPowerState, R... {AcceleratorCapabilities, Availability, CapabilityDescripti...
+Win32_VideoController               {SetPowerState, R... {AcceleratorCapabilities, AdapterCompatibility, AdapterDACT...
+CIM_VideoBIOSElement                {}                   {BuildNumber, Caption, CodeSet, Description...}               
+CIM_VideoBIOSFeatureVideoBIOSEle... {}                   {GroupComponent, PartComponent}
+
+--------------------------------
+gwmi Win32_VideoController
+
+
+__GENUS                      : 2
+__CLASS                      : Win32_VideoController
+__SUPERCLASS                 : CIM_PCVideoController
+__DYNASTY                    : CIM_ManagedSystemElement
+__RELPATH                    : Win32_VideoController.DeviceID="VideoController1"
+__PROPERTY_COUNT             : 59
+__DERIVATION                 : {CIM_PCVideoController, CIM_VideoController, CIM_Controller, CIM_LogicalDevice...}
+__SERVER                     : ANDREWLAP
+__NAMESPACE                  : root\cimv2
+__PATH                       : \\ANDREWLAP\root\cimv2:Win32_VideoController.DeviceID="VideoController1"
+AcceleratorCapabilities      : 
+AcceleratorCapabilities      : 
+AdapterCompatibility         : NVIDIA
+AdapterDACType               : Integrated RAMDAC
+AdapterRAM                   : 1610612736
+Availability                 : 3
+CapabilityDescriptions       : 
+Caption                      : NVIDIA GeForce GTX 460M
+ColorTableEntries            : 
+ConfigManagerErrorCode       : 0
+ConfigManagerUserConfig      : False
+CreationClassName            : Win32_VideoController
+CurrentBitsPerPixel          : 32
+CurrentHorizontalResolution  : 1920
+CurrentNumberOfColors        : 4294967296
+CurrentNumberOfColumns       : 0
+CurrentNumberOfRows          : 0
+CurrentRefreshRate           : 60
+CurrentScanMode              : 4
+CurrentVerticalResolution    : 1080
+Description                  : NVIDIA GeForce GTX 460M
+DeviceID                     : VideoController1
+DeviceSpecificPens           : 
+DitherType                   : 0
+DriverDate                   : 20161001000000.000000-000
+DriverVersion                : 21.21.13.7306
+ErrorCleared                 : 
+ErrorDescription             : 
+ICMIntent                    : 
+ICMMethod                    : 
+InfFilename                  : oem80.inf
+InfSection                   : Section011
+InstallDate                  : 
+InstalledDisplayDrivers      : nvd3dumx.dll,nvwgf2umx.dll,nvwgf2umx.dll,nvwgf2umx.dll,nvd3dum,nvwgf2um,nvwgf2um,nvwgf2um
+LastErrorCode                : 
+MaxMemorySupported           : 
+MaxNumberControlled          : 
+MaxRefreshRate               : 75
+MinRefreshRate               : 56
+Monochrome                   : False
+Name                         : NVIDIA GeForce GTX 460M
+NumberOfColorPlanes          : 
+NumberOfVideoPages           : 
+PNPDeviceID                  : PCI\VEN_10DE&DEV_0DD1&SUBSYS_20421043&REV_A1\4&1DD391AA&0&0018
+PowerManagementCapabilities  : 
+PowerManagementSupported     : 
+ProtocolSupported            : 
+ReservedSystemPaletteEntries : 
+SpecificationVersion         : 
+Status                       : OK
+StatusInfo                   : 
+SystemCreationClassName      : Win32_ComputerSystem
+SystemName                   : ANDREWLAP
+SystemPaletteEntries         : 
+TimeOfLastReset              : 
+VideoArchitecture            : 5
+VideoMemoryType              : 2
+VideoMode                    : 
+VideoModeDescription         : 1920 x 1080 x 4294967296 colors
+VideoProcessor               : GeForce GTX 460M
+PSComputerName               : ANDREWLAP
