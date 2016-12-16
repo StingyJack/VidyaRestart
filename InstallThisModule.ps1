@@ -1,23 +1,40 @@
 $ErrorActionPreference="Stop"
-$modulePath = 'C:\\Program Files\\jackshacks\\Modules\\';
+
+$modulePath = "$env:programfiles\WindowsPowerShell\Modules\jackshacks";
+
+Write-Output "Installing modules to $modulePath"
 
 if (-Not(Test-Path $modulePath))
 {
+    Write-Output "Creating module folder $modulePath";
     New-Item $modulePath -ItemType Directory
 }
-Copy-Item -Path *.psm1 -Destination $modulePath
 
-#Save the current value in the $p variable.
+$psFiles = Get-ChildItem -Path $PSScriptRoot -File
+$psModules = $psFiles | where{$_.Extension -eq ".psm1"}
+
+foreach($psModule in $psModules) {
+    
+    Write-Output "Adding module $psModule"
+    Copy-Item -Path $psModule.FullName -Destination $modulePath
+}
+
 $p = [Environment]::GetEnvironmentVariable("PSModulePath")
 
-if (-Not ($p -Match $modulePath))
-{
-    #Add the new path to the $p variable. Begin with a semi-colon separator.
-    $p += ";$modulePath"
+#because regex is fail
+$modulePathLike = "*$modulePath*"
 
-    #Add the paths in $p to the PSModulePath value.
-    [Environment]::SetEnvironmentVariable("PSModulePath",$p)    
+if (-Not ($p -like $modulePathLike))
+{
+    $p += ";$modulePath"
+    [Environment]::SetEnvironmentVariable("PSModulePath",$p) 
+ 
 }
 else {
-    Write-Host "$modulePath is already added to path"
+    Write-Output "$modulePath is already added to path"
 }
+
+$broadcastSettingsChange = $PSScriptRoot + "\Broadcast-SettingsChanged.ps1"
+Invoke-Expression -Command $broadcastSettingsChange
+
+Write-Output "Module install complete"
