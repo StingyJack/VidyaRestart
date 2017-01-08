@@ -1,6 +1,6 @@
 #Requires -RunAsAdministrator
 
-Import-Module $PSScriptRoot\DeviceManagement\DeviceManagement.psd1
+Import-Module DeviceManagement
 
 $adapterName = (gwmi Win32_VideoController).Name
 

@@ -1,40 +1,42 @@
-$ErrorActionPreference="Stop"
+#Requires -RunAsAdministrator
 
-$modulePath = "$env:programfiles\WindowsPowerShell\Modules\jackshacks";
+$ErrorActionPreference = "Stop"
+Set-StrictMode  -Version Latest 
 
-Write-Output "Installing modules to $modulePath"
-
-if (-Not(Test-Path $modulePath))
-{
-    Write-Output "Creating module folder $modulePath";
-    New-Item $modulePath -ItemType Directory
+function InstallPsGet() {
+    if (Get-Module -ListAvailable -Name PsGet) {
+        Write-Host "PSGet already installed"
+    } else {
+        Write-Host "PSGet not installed downloading..."
+        (new-object Net.WebClient).DownloadString("http://psget.net/GetPsGet.ps1") | iex
+        Write-Host "PSGet installed and should be OK to use"
+    }
 }
 
-$psFiles = Get-ChildItem -Path $PSScriptRoot -File
-$psModules = $psFiles | where{$_.Extension -eq ".psm1"}
-
-foreach($psModule in $psModules) {
-    
-    Write-Output "Adding module $psModule"
-    Copy-Item -Path $psModule.FullName -Destination $modulePath
+function InstallModuleIfDoesntExist (
+    # The name of the module
+    [string] $moduleName,
+    # Parameter help description
+    [string] $localModulePath = $null
+){
+    if (Get-Module -ListAvailable -Name moduleName) {
+        Write-Host "$moduleName already installed"
+        return
+    } else {
+        if ([string]::IsNullOrWhiteSpace($localModulePath)) {
+            Write-Host "$moduleName not installed... Getting from package manager"
+            Install-Module -Module $moduleName -Global
+        }
+        else {
+            Write-Host "$moduleName not installed... Using specified path "$localModulePath
+            Install-Module -ModulePath $localModulePath -Global
+        }
+    }
 }
 
-$p = [Environment]::GetEnvironmentVariable("PSModulePath")
+InstallPsGet 
+Import-Module PsGet
+InstallModuleIfDoesntExist "Restart-Video" ".\Restart-Video.psm1"
+Write-Host "operation complete"
 
-#because regex is fail
-$modulePathLike = "*$modulePath*"
 
-if (-Not ($p -like $modulePathLike))
-{
-    $p += ";$modulePath"
-    [Environment]::SetEnvironmentVariable("PSModulePath",$p) 
- 
-}
-else {
-    Write-Output "$modulePath is already added to path"
-}
-
-$broadcastSettingsChange = $PSScriptRoot + "\Broadcast-SettingsChanged.ps1"
-Invoke-Expression -Command $broadcastSettingsChange
-
-Write-Output "Module install complete"
