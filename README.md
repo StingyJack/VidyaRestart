@@ -1,7 +1,7 @@
 This will find your video card and effectively restart the driver by disabling and 
 reenabling the device. 
 
-You will need to download the MS cmdlets for device management and put them in the \DeviceManagement 
+You will need to download the MS cmdlets for device management and put them in this folder 
 folder (or wherever and update the import statement).
 https://gallery.technet.microsoft.com/scriptcenter/Device-Management-7fad2388
 

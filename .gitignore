@@ -1,2 +1,2 @@
-/DeviceManagement/DeviceManagement*.*
-/DeviceManagement/en-us/*.*
+*DeviceManagement*
+*/en-us/*.*
