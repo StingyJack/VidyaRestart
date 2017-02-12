@@ -1,5 +1,8 @@
 #Requires -RunAsAdministrator
 
+$ErrorActionPreference = "Stop"
+Set-StrictMode  -Version Latest 
+
 function Restart-Video
 {
     Import-Module DeviceManagement

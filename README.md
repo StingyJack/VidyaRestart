@@ -1,12 +1,32 @@
+## For restarting your video driver
 This will find your video card and effectively restart the driver by disabling and 
-reenabling the device.  Its crappy, but works (for me at least). InstallThisModule probably doesnt
-work right - module installation is a pain in the ass.
+reenabling the device.  Its crappy, but works so long as you can run the module without 
+being able to see the screen (driver crash). I use a shortcut with a shortcut key combo. 
 
+## before installing
+
+You can view the video devices (or others) by using the `.\List-VideoDevices.ps1`. If your
+have multiple cards, you may need to loop them or force one or the other.
+
+Check for the  [the DeviceManagement module](##GettheDeviceManagementmodulefrommicrosoft)
+
+
+## to install
+
+Run `InstallThisModule.ps1` and it will install this into the "machine" path (c:\prog files\windowspowershell).
+
+Once installed run 
+``` powershell
+PS> Restart-Video
+```
+... at the powershell prompt
+
+## Get the DeviceManagement module from microsoft
 You will need to download the MS cmdlets for device management and put them directly in this folder 
-folder (or wherever and update the import statement).
+folder (or wherever and update the import statement). They arent mine to redistribute.
 https://gallery.technet.microsoft.com/scriptcenter/Device-Management-7fad2388
 
-The folder structure should look like this
+After downloading them, the folder structure should look like this...
 ``` 
 \ (root, where this Readme.md file is)  
 \DeviceManagement.psd1  
@@ -20,22 +40,10 @@ The folder structure should look like this
 ```
 
 This folder structure and some of the scripts assumes that DeviceManagement is installed as a
-module. If that's not the case, then change the module path statement in the Restart-Video.ps1 from...
+module.
 
-```Import-Module DeviceManagement```
+## bits and pieces
 
-to
-
-```Import-Module $PSScriptRoot\DeviceManagement\DeviceManagement.psd1```
-
-
-If you want to use that toolkit outside of Powershell command line, then find the 
-PowerShellHostVersion attribute in its psd1 file and take out the 3.0 and leave blank. 
-
-It needs to run as administrator. The Shortcut "ResetVidya" should do the work, but the 
-guts are in rvga.ps1 and the device mgt stuff
-
-Not sure if more needed to support multiple cards, as my laptop has only one.
-
-
-DWTFYWWI license for my bits. The DeviceManagement stuff is MSPL and I cant find the repo here. 
+- It needs to run as administrator. 
+- The Shortcut "ResetVidya" should do the work, but "it works on my machine". However the guts are in rvga.ps1 and the device mgt stuff
+- Not sure if more needed to support multiple cards, as my laptop has only one.
